@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="ArticulMaster.exe" version="4.3.0.3" publicKeyToken="8e8fae54033e9cc3" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Launcher" version="8.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Launcher.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Launcher.exe" size="17776">
+      <assemblyIdentity name="Launcher" version="8.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>6vqglQK/fM45392GbxkFiMBTstGbqepeOqTs877dHmU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="ArticulMaster.deps.json" size="433">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>cnn3PYYC5C2vflktVdLR3RArJUug1vusOInFKVXFx0s=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="ArticulMaster.dll" size="17264">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UXc4cJKPiGq4XTw0asjqtSUpu7zg1B0tyOjFc+Jl3WY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="ArticulMaster.exe" size="163696">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>OIfEZpnXwayaIrhF4sjHfgh69dPASKB0pzQ3/8AV9j0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="ArticulMaster.runtimeconfig.json" size="519">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>lrwpRt/4eQQA1lLsf43nuwQ+lUmA1ZRwwRJ4i2ih+9M=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=ALEX\belph" issuerKeyHash="9f2d1fb81c63796927983d6a0b4494eaf598636f" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>egWMSHqZEES+BAiw+cO42BNEVvBPdLbLstheYOLWWK8=</DigestValue></Reference></SignedInfo><SignatureValue>XdbZHbIhrRBR9tyj8vIbbD7jVLeqaZH6X8+p8Jqb9DfcZ6gt+IArv2u9hTE/HH41Bxldj1IQJsQU/Y2rbMNXQzNSrYuyo9+m1mdI5P8CFI/48OfFLAV6cEwgrz1msn5/XPDGaQ6VpLxzc4yNsDYgzj65s2F7Kxa7r+aFMORhoNxoQQM611rW5LGpIvkCptmrKrZssWI4tWk8PwL6Qq2snaOasOFlZb33+YMPyhVdm/d3VlnJJAqHa0T5qVlty8HyzKkdP+MUAvzqp4ciALo2u/XEu/aWV2rKeG5Mh8HI7wZ1AR1CZzlARZrUHhccos8S5wW19LvD63GJuCvA6qby6g==</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>uFL6nHMnCHWM4YmKIm/5ouepUrk53p8V4X8fZ+5ytW0i3mNGunvxBRklZgTbEFRKxTpIHQb7VpGDRwIxVm3+Z7g3xyLW8N7HEBRyGNE9gXmHw/V0sc12rdp/4u4JH/uyIxO29GfA5v0EpHIxITSwDsSbamYacGnEm9fNdkNQsuzj/YUKiAfp9RV6kEgc+0wbpk6DtoNAkDLtZXeQvuwEevGLtKKh7jbWZW1tmhD0NRMCYJA9sgEU+wShrzkl7ntYht+m2gOYw6xo5x7K7WZbEi9iV1ndVy+sxjuu0Gr/xeG9OJwmyT1ws7s4NNP/uCsGCcuv651UP0yXc/f4KrcsjQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="af58d6e2605ed8b2cbb6744ff0564413d8b8c3f9b00804be4410997a488c057a" Description="" Url=""><as:assemblyIdentity name="ArticulMaster.exe" version="4.3.0.3" publicKeyToken="8e8fae54033e9cc3" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=ALEX\belph</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>sPQdoHvDKd0nbglv5jLE2XJqgJnskTSWJPImT81jNHo=</DigestValue></Reference></SignedInfo><SignatureValue>LOWhSWzn73M/yQR5DIq7je4LK+WQ8d5p/r9ufc/xRAq+gG//Go2HiCQ14QUQ5wx+yKf2uB67sICpG4cqH6eJqoPZ4PuybHYgd38/kbglQ8odWICUkFM/NSzfHpzj52pz/Oy740QPkamGvuoGkih3OVXdXX0KrwpuoXW8d2jb+HvSsYUcOtiIxD7fUIznzFAu4a4ohg2pG3KeVHeg1aBKLqLSLslp49DVyHQ2WmJJlrsLyQBP/aistKOi0tiOphoRsEXUaFUj/v7G69DepnuOIMzV7tYY6Fs7WoYtP6yKJIlCTMEM0n2PGxeeixY5Mo/ezGz4fEUeBSAV0C1UR33Gog==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>uFL6nHMnCHWM4YmKIm/5ouepUrk53p8V4X8fZ+5ytW0i3mNGunvxBRklZgTbEFRKxTpIHQb7VpGDRwIxVm3+Z7g3xyLW8N7HEBRyGNE9gXmHw/V0sc12rdp/4u4JH/uyIxO29GfA5v0EpHIxITSwDsSbamYacGnEm9fNdkNQsuzj/YUKiAfp9RV6kEgc+0wbpk6DtoNAkDLtZXeQvuwEevGLtKKh7jbWZW1tmhD0NRMCYJA9sgEU+wShrzkl7ntYht+m2gOYw6xo5x7K7WZbEi9iV1ndVy+sxjuu0Gr/xeG9OJwmyT1ws7s4NNP/uCsGCcuv651UP0yXc/f4KrcsjQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIC+TCCAeGgAwIBAgIJAPebUabzhnifMA0GCSqGSIb3DQEBCwUAMB8xHTAbBgNVBAMeFABBAEwARQBYAFwAYgBlAGwAcABoMB4XDTI2MDQyMjE5MTUzNFoXDTI2MDQyOTE5MTUzNFowHzEdMBsGA1UEAx4UAEEATABFAFgAXABiAGUAbABwAGgwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC4UvqccycIdYzhiYoib/mi56lSuTnenxXhfx9n7nK1bSLeY0a6e/EFGSVmBNsQVErFOkgdBvtWkYNHAjFWbf5nuDfHItbw3scQFHIY0T2BeYfD9XSxzXat2n/i7gkf+7IjE7b0Z8Dm/QSkcjEhNLAOxJtqZhpwacSb1812Q1Cy7OP9hQqIB+n1FXqQSBz7TBumToO2g0CQMu1ld5C+7AR68Yu0oqHuNtZlbW2aEPQ1EwJgkD2yART7BKGvOSXue1iG36baA5jDrGjnHsrtZlsSL2JXWd1XL6zGO67Qav/F4b04nCbJPXCzuzg00/+4KwYJy6/rnVQ/TJdz9/gqtyyNAgMBAAGjODA2MAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgeAMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMDMA0GCSqGSIb3DQEBCwUAA4IBAQA+nkr9AU6hemd5H3nye7Cm+yz5fma35lfSKrSv9UlH8r/dLaBgoAqFuDP3WEPc0AFJuXZKZ/1tJEPFoj09Kx4a4WkMol8JRKSodSKS4Tzu/Um2BHgD8Uk3oGyKbtrcx2dtzXKSCRWORF384sqC2rWkEXt8zAqqgRWnbh3Ns0w54eVUXvrCKZxVpXDiIKVGFObHM/JHFkShN5SKphYUsOr7gOv17qoRR+nCKtHlCYJni35PuArSS0+w2kteBMSoEbR+P8E+F6OvFC+cztBK20VADmLZWFrQNasSLLxD+0guUEV7wV1cDWA2987bzfphI6GmlnnUpUvwBXoHuN4RK2bt</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
