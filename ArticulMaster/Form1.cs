@@ -271,124 +271,160 @@ public class Form1 : Form
 		base.Dispose(disposing);
 	}
 
-	private void InitializeComponent()
-	{
-		System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArticulMaster.Form1));
-		this.lblTitle = new System.Windows.Forms.Label();
-		this.comboVendors = new System.Windows.Forms.ComboBox();
-		this.txtPrice = new System.Windows.Forms.TextBox();
-		this.lblCount = new System.Windows.Forms.Label();
-		this.btnEdit = new System.Windows.Forms.Button();
-		this.btnImport = new System.Windows.Forms.Button();
-		this.txtSearch = new System.Windows.Forms.TextBox();
-		this.btnSearch = new System.Windows.Forms.Button();
-		this.btnDelete = new System.Windows.Forms.Button();
-		this.lblSearchStatus = new System.Windows.Forms.Label();
-		this.txtResult = new System.Windows.Forms.TextBox();
-		base.SuspendLayout();
-		this.lblTitle.AutoSize = true;
-		this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16f, System.Drawing.FontStyle.Bold);
-		this.lblTitle.Location = new System.Drawing.Point(26, 27);
-		this.lblTitle.Name = "lblTitle";
-		this.lblTitle.Size = new System.Drawing.Size(247, 30);
-		this.lblTitle.TabIndex = 0;
-		this.lblTitle.Text = "ARTICUL MASTER PRO";
-		this.comboVendors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-		this.comboVendors.FormattingEnabled = true;
-		this.comboVendors.Location = new System.Drawing.Point(49, 70);
-		this.comboVendors.Name = "comboVendors";
-		this.comboVendors.Size = new System.Drawing.Size(190, 23);
-		this.comboVendors.TabIndex = 1;
-		this.txtPrice.BackColor = System.Drawing.SystemColors.Window;
-		this.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-		this.txtPrice.Location = new System.Drawing.Point(99, 228);
-		this.txtPrice.Name = "txtPrice";
-		this.txtPrice.Size = new System.Drawing.Size(100, 23);
-		this.txtPrice.TabIndex = 2;
-		this.txtPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-		this.txtPrice.KeyDown += new System.Windows.Forms.KeyEventHandler(txtPrice_KeyDown);
-		this.lblCount.AutoSize = true;
-		this.lblCount.Location = new System.Drawing.Point(96, 106);
-		this.lblCount.Name = "lblCount";
-		this.lblCount.Size = new System.Drawing.Size(107, 15);
-		this.lblCount.TabIndex = 4;
-		this.lblCount.Text = "Артикулів у базі: 0";
-		this.btnEdit.Location = new System.Drawing.Point(245, 70);
-		this.btnEdit.Name = "btnEdit";
-		this.btnEdit.Size = new System.Drawing.Size(41, 23);
-		this.btnEdit.TabIndex = 5;
-		this.btnEdit.Text = "Edit";
-		this.btnEdit.UseVisualStyleBackColor = true;
-		this.btnEdit.Click += new System.EventHandler(btnEdit_Click);
-		this.btnImport.Font = new System.Drawing.Font("Segoe UI", 9f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 204);
-		this.btnImport.Location = new System.Drawing.Point(112, 477);
-		this.btnImport.Name = "btnImport";
-		this.btnImport.Size = new System.Drawing.Size(75, 23);
-		this.btnImport.TabIndex = 6;
-		this.btnImport.Text = "Import";
-		this.btnImport.UseVisualStyleBackColor = true;
-		this.btnImport.Click += new System.EventHandler(btnImport_Click);
-		this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-		this.txtSearch.Location = new System.Drawing.Point(49, 135);
-		this.txtSearch.Name = "txtSearch";
-		this.txtSearch.Size = new System.Drawing.Size(100, 23);
-		this.txtSearch.TabIndex = 7;
-		this.txtSearch.Text = "Пошук";
-		this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-		this.txtSearch.Enter += new System.EventHandler(txtSearch_Enter);
-		this.txtSearch.Leave += new System.EventHandler(txtSearch_Leave);
-		this.btnSearch.Location = new System.Drawing.Point(155, 134);
-		this.btnSearch.Name = "btnSearch";
-		this.btnSearch.Size = new System.Drawing.Size(55, 23);
-		this.btnSearch.TabIndex = 8;
-		this.btnSearch.Text = "\ud83d\udd0d";
-		this.btnSearch.UseVisualStyleBackColor = true;
-		this.btnSearch.Click += new System.EventHandler(btnSearch_Click);
-		this.btnDelete.Location = new System.Drawing.Point(216, 135);
-		this.btnDelete.Name = "btnDelete";
-		this.btnDelete.Size = new System.Drawing.Size(50, 23);
-		this.btnDelete.TabIndex = 9;
-		this.btnDelete.Text = "Del";
-		this.btnDelete.UseVisualStyleBackColor = true;
-		this.btnDelete.Click += new System.EventHandler(btnDelete_Click);
-		this.lblSearchStatus.Font = new System.Drawing.Font("Segoe UI", 15.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 204);
-		this.lblSearchStatus.Location = new System.Drawing.Point(70, 179);
-		this.lblSearchStatus.Name = "lblSearchStatus";
-		this.lblSearchStatus.Size = new System.Drawing.Size(158, 31);
-		this.lblSearchStatus.TabIndex = 10;
-		this.lblSearchStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-		this.txtResult.BackColor = System.Drawing.Color.LightSlateGray;
-		this.txtResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
-		this.txtResult.Cursor = System.Windows.Forms.Cursors.IBeam;
-		this.txtResult.Font = new System.Drawing.Font("Segoe UI", 18f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 204);
-		this.txtResult.ForeColor = System.Drawing.Color.GreenYellow;
-		this.txtResult.Location = new System.Drawing.Point(70, 276);
-		this.txtResult.Name = "txtResult";
-		this.txtResult.ReadOnly = true;
-		this.txtResult.Size = new System.Drawing.Size(158, 32);
-		this.txtResult.TabIndex = 11;
-		this.txtResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-		base.AutoScaleDimensions = new System.Drawing.SizeF(7f, 15f);
-		base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-		this.BackColor = System.Drawing.Color.LightSlateGray;
-		base.ClientSize = new System.Drawing.Size(298, 523);
-		base.Controls.Add(this.txtResult);
-		base.Controls.Add(this.lblSearchStatus);
-		base.Controls.Add(this.btnDelete);
-		base.Controls.Add(this.btnSearch);
-		base.Controls.Add(this.txtSearch);
-		base.Controls.Add(this.btnImport);
-		base.Controls.Add(this.btnEdit);
-		base.Controls.Add(this.lblCount);
-		base.Controls.Add(this.txtPrice);
-		base.Controls.Add(this.comboVendors);
-		base.Controls.Add(this.lblTitle);
-		this.ForeColor = System.Drawing.Color.DarkBlue;
-		base.Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-		base.Name = "Form1";
-		this.Text = "Articul Master Pro";
-		base.Load += new System.EventHandler(Form1_Load);
-		base.ResumeLayout(false);
-		base.PerformLayout();
-	}
+    private void InitializeComponent()
+    {
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(Form1));
+        lblTitle = new Label();
+        comboVendors = new ComboBox();
+        txtPrice = new TextBox();
+        lblCount = new Label();
+        btnEdit = new Button();
+        btnImport = new Button();
+        txtSearch = new TextBox();
+        btnSearch = new Button();
+        btnDelete = new Button();
+        lblSearchStatus = new Label();
+        txtResult = new TextBox();
+        SuspendLayout();
+        // 
+        // lblTitle
+        // 
+        lblTitle.AutoSize = true;
+        lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+        lblTitle.Location = new Point(43, 27);
+        lblTitle.Name = "lblTitle";
+        lblTitle.Size = new Size(213, 30);
+        lblTitle.TabIndex = 0;
+        lblTitle.Text = "Articul Master PRO";
+        // 
+        // comboVendors
+        // 
+        comboVendors.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboVendors.FormattingEnabled = true;
+        comboVendors.Location = new Point(49, 70);
+        comboVendors.Name = "comboVendors";
+        comboVendors.Size = new Size(190, 23);
+        comboVendors.TabIndex = 1;
+        // 
+        // txtPrice
+        // 
+        txtPrice.BackColor = SystemColors.Window;
+        txtPrice.BorderStyle = BorderStyle.FixedSingle;
+        txtPrice.Location = new Point(99, 228);
+        txtPrice.Name = "txtPrice";
+        txtPrice.Size = new Size(100, 23);
+        txtPrice.TabIndex = 2;
+        txtPrice.TextAlign = HorizontalAlignment.Center;
+        txtPrice.KeyDown += txtPrice_KeyDown;
+        // 
+        // lblCount
+        // 
+        lblCount.AutoSize = true;
+        lblCount.Location = new Point(96, 106);
+        lblCount.Name = "lblCount";
+        lblCount.Size = new Size(107, 15);
+        lblCount.TabIndex = 4;
+        lblCount.Text = "Артикулів у базі: 0";
+        // 
+        // btnEdit
+        // 
+        btnEdit.Location = new Point(245, 70);
+        btnEdit.Name = "btnEdit";
+        btnEdit.Size = new Size(41, 23);
+        btnEdit.TabIndex = 5;
+        btnEdit.Text = "Edit";
+        btnEdit.UseVisualStyleBackColor = true;
+        btnEdit.Click += btnEdit_Click;
+        // 
+        // btnImport
+        // 
+        btnImport.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+        btnImport.Location = new Point(112, 477);
+        btnImport.Name = "btnImport";
+        btnImport.Size = new Size(75, 23);
+        btnImport.TabIndex = 6;
+        btnImport.Text = "Import";
+        btnImport.UseVisualStyleBackColor = true;
+        btnImport.Click += btnImport_Click;
+        // 
+        // txtSearch
+        // 
+        txtSearch.ForeColor = Color.Gray;
+        txtSearch.Location = new Point(49, 135);
+        txtSearch.Name = "txtSearch";
+        txtSearch.Size = new Size(100, 23);
+        txtSearch.TabIndex = 7;
+        txtSearch.Text = "Пошук";
+        txtSearch.TextAlign = HorizontalAlignment.Center;
+        txtSearch.Enter += txtSearch_Enter;
+        txtSearch.Leave += txtSearch_Leave;
+        // 
+        // btnSearch
+        // 
+        btnSearch.Location = new Point(155, 134);
+        btnSearch.Name = "btnSearch";
+        btnSearch.Size = new Size(55, 23);
+        btnSearch.TabIndex = 8;
+        btnSearch.Text = "🔍";
+        btnSearch.UseVisualStyleBackColor = true;
+        btnSearch.Click += btnSearch_Click;
+        // 
+        // btnDelete
+        // 
+        btnDelete.Location = new Point(216, 135);
+        btnDelete.Name = "btnDelete";
+        btnDelete.Size = new Size(50, 23);
+        btnDelete.TabIndex = 9;
+        btnDelete.Text = "Del";
+        btnDelete.UseVisualStyleBackColor = true;
+        btnDelete.Click += btnDelete_Click;
+        // 
+        // lblSearchStatus
+        // 
+        lblSearchStatus.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+        lblSearchStatus.Location = new Point(70, 179);
+        lblSearchStatus.Name = "lblSearchStatus";
+        lblSearchStatus.Size = new Size(158, 31);
+        lblSearchStatus.TabIndex = 10;
+        lblSearchStatus.TextAlign = ContentAlignment.MiddleCenter;
+        // 
+        // txtResult
+        // 
+        txtResult.BackColor = Color.LightSlateGray;
+        txtResult.BorderStyle = BorderStyle.None;
+        txtResult.Cursor = Cursors.IBeam;
+        txtResult.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
+        txtResult.ForeColor = Color.GreenYellow;
+        txtResult.Location = new Point(70, 276);
+        txtResult.Name = "txtResult";
+        txtResult.ReadOnly = true;
+        txtResult.Size = new Size(158, 32);
+        txtResult.TabIndex = 11;
+        txtResult.TextAlign = HorizontalAlignment.Center;
+        // 
+        // Form1
+        // 
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        BackColor = Color.LightSlateGray;
+        ClientSize = new Size(298, 523);
+        Controls.Add(txtResult);
+        Controls.Add(lblSearchStatus);
+        Controls.Add(btnDelete);
+        Controls.Add(btnSearch);
+        Controls.Add(txtSearch);
+        Controls.Add(btnImport);
+        Controls.Add(btnEdit);
+        Controls.Add(lblCount);
+        Controls.Add(txtPrice);
+        Controls.Add(comboVendors);
+        Controls.Add(lblTitle);
+        ForeColor = Color.DarkBlue;
+        Icon = (Icon)resources.GetObject("$this.Icon");
+        Name = "Form1";
+        Text = "Articul Master Pro";
+        Load += Form1_Load;
+        ResumeLayout(false);
+        PerformLayout();
+    }
 }
