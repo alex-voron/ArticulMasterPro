@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>ArticulMaster</AssemblyName>
+    <AssemblyName>ArticulMasterPro</AssemblyName>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>True</UseWindowsForms>
@@ -14,8 +14,9 @@
   <PropertyGroup>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <RootNamespace />
-    <Copyright>Oleksandr Voronin</Copyright>
+    <Copyright>OleksandrVoronin</Copyright>
     <PackageIcon>мастер.png</PackageIcon>
+    <AssemblyTitle>ArticulMasterPro</AssemblyTitle>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\Орест\мастер.png">
