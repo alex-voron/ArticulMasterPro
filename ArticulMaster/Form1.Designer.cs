@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             lblTitle = new Label();
             comboVendors = new ComboBox();
             txtPrice = new TextBox();
@@ -174,6 +175,7 @@
             Controls.Add(comboVendors);
             Controls.Add(lblTitle);
             ForeColor = Color.DarkBlue;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Articul Master Pro";
             Load += Form1_Load;

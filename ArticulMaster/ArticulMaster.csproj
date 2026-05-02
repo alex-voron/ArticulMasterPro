@@ -6,11 +6,22 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>ArticulMaster.ico</ApplicationIcon>
+    <ApplicationIcon>imgonline-com-ua-favicon-rtIPQBkAXBk3.ico</ApplicationIcon>
+    <Title>ArticulMaster</Title>
+    <Authors>Voronin Oleksandr</Authors>
+    <Copyright>Voronin Oleksandr</Copyright>
+    <PackageIcon>мастер.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="ArticulMaster.ico" />
+    <Content Include="imgonline-com-ua-favicon-rtIPQBkAXBk3.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Орест\мастер.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
