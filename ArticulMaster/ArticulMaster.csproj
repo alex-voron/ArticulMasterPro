@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>ArticulMaster</AssemblyName>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
@@ -14,7 +14,13 @@
   <PropertyGroup>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <RootNamespace />
+    <Copyright>Oleksandr Voronin</Copyright>
+    <PackageIcon>мастер.png</PackageIcon>
   </PropertyGroup>
-  <ItemGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="..\..\Орест\мастер.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
