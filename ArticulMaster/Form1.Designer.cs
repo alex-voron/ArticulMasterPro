@@ -68,6 +68,7 @@
             txtPrice.Name = "txtPrice";
             txtPrice.Size = new Size(100, 23);
             txtPrice.TabIndex = 2;
+            txtPrice.TextAlign = HorizontalAlignment.Center;
             txtPrice.KeyDown += txtPrice_KeyDown;
             // 
             // lblCount
@@ -91,6 +92,7 @@
             // 
             // btnImport
             // 
+            btnImport.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnImport.Location = new Point(112, 477);
             btnImport.Name = "btnImport";
             btnImport.Size = new Size(75, 23);
@@ -142,7 +144,7 @@
             // 
             // txtResult
             // 
-            txtResult.BackColor = SystemColors.Window;
+            txtResult.BackColor = Color.LightSlateGray;
             txtResult.BorderStyle = BorderStyle.None;
             txtResult.Cursor = Cursors.IBeam;
             txtResult.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
@@ -158,7 +160,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Window;
+            BackColor = Color.LightSlateGray;
             ClientSize = new Size(298, 523);
             Controls.Add(txtResult);
             Controls.Add(lblSearchStatus);

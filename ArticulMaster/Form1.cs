@@ -10,10 +10,9 @@ namespace ArticulMaster
 {
     public partial class Form1 : Form
     {
-        // Пам'ять для цін поточного вендора
+        private string currentVersion = "4.3.0.4"; // Підняв до 4.4 для тесту оновлення
         private HashSet<int> occupiedPrices = new HashSet<int>();
 
-        // Список вендорів (можна додавати нових тут)
         private List<string> vendorsList = new List<string> {
             "[207] Pc.Lviv", "[212] eLaptop", "[33] PXL", "[37] Fortserg1",
             "[241] Gadgetusa", "[11] It-Technolodgy", "[213] IT-Lviv",
@@ -23,22 +22,34 @@ namespace ArticulMaster
         public Form1()
         {
             InitializeComponent();
-            // Налаштування, щоб програма при старті була по центру екрана
             this.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        // --- НОВИЙ МЕТОД ДЛЯ НАДІЙНОГО ЗБЕРЕЖЕННЯ ФАЙЛІВ ---
+        private string GetFilePath(string code)
+        {
+            // Шлях до папки користувача: C:\Users\Ім'я\AppData\Local\ArticulMaster
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ArticulMaster");
+
+            // Якщо папки ще немає (перший запуск) - створюємо її
+            if (!Directory.Exists(appDataPath))
+            {
+                Directory.CreateDirectory(appDataPath);
+            }
+
+            return Path.Combine(appDataPath, $"{code}.txt");
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Ініціалізація випадаючого списку
+            this.Text = $"Articul Master Pro v.{currentVersion}";
             comboVendors.Items.Clear();
             foreach (var v in vendorsList) comboVendors.Items.Add(v);
 
-            // Подія зміни вендора — завантажуємо відповідну базу
             comboVendors.SelectedIndexChanged += (s, ev) => LoadDatabaseForSelectedVendor();
 
             if (comboVendors.Items.Count > 0) comboVendors.SelectedIndex = 0;
 
-            // Початковий стан пошуку (сірий плейсхолдер)
             txtSearch.Text = "пошук";
             txtSearch.ForeColor = Color.Gray;
         }
@@ -47,11 +58,11 @@ namespace ArticulMaster
         {
             occupiedPrices.Clear();
             string code = GetVendorCode(comboVendors.Text);
-            string fileName = $"{code}.txt";
+            string filePath = GetFilePath(code); // Використовуємо новий шлях
 
-            if (File.Exists(fileName))
+            if (File.Exists(filePath))
             {
-                string[] lines = File.ReadAllLines(fileName);
+                string[] lines = File.ReadAllLines(filePath);
                 foreach (string line in lines)
                 {
                     if (int.TryParse(line.Trim(), out int p)) occupiedPrices.Add(p);
@@ -73,18 +84,16 @@ namespace ArticulMaster
             if (int.TryParse(txtPrice.Text.Trim(), out int price))
             {
                 string vendorCode = GetVendorCode(comboVendors.Text);
-                string fileName = $"{vendorCode}.txt";
+                string filePath = GetFilePath(vendorCode); // Використовуємо новий шлях
 
-                // Логіка унікальності ціни (зменшуємо на 1, поки не знайдемо вільну)
                 while (occupiedPrices.Contains(price))
                 {
                     price--;
                 }
 
                 occupiedPrices.Add(price);
-                File.AppendAllText(fileName, price.ToString() + Environment.NewLine);
+                File.AppendAllText(filePath, price.ToString() + Environment.NewLine);
 
-                // Вивід результату
                 txtResult.ForeColor = Color.SpringGreen;
                 txtResult.Text = $"{price}_{vendorCode}";
                 Clipboard.SetText(txtResult.Text);
@@ -109,16 +118,15 @@ namespace ArticulMaster
             }
         }
 
-        // --- КНОПКА РЕДАГУВАННЯ (Блокнот) ---
         private void btnEdit_Click(object sender, EventArgs e)
         {
             string code = GetVendorCode(comboVendors.Text);
-            string fileName = $"{code}.txt";
+            string filePath = GetFilePath(code); // Використовуємо новий шлях
 
-            if (File.Exists(fileName))
+            if (File.Exists(filePath))
             {
                 var process = new System.Diagnostics.Process();
-                process.StartInfo = new System.Diagnostics.ProcessStartInfo(fileName) { UseShellExecute = true };
+                process.StartInfo = new System.Diagnostics.ProcessStartInfo(filePath) { UseShellExecute = true };
                 process.EnableRaisingEvents = true;
                 process.Exited += (s, ev) =>
                 {
@@ -128,11 +136,10 @@ namespace ArticulMaster
             }
             else
             {
-                MessageBox.Show(this, $"Файл {fileName} ще не створений.", "Редагування");
+                MessageBox.Show(this, "Файл ще не створений. Додайте перший артикул!", "Редагування");
             }
         }
 
-        // --- КНОПКА ІМПОРТУ ---
         private void btnImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog { Filter = "Text Files (*.txt)|*.txt" };
@@ -141,7 +148,7 @@ namespace ArticulMaster
                 try
                 {
                     string vendorCode = GetVendorCode(comboVendors.Text);
-                    string dbFile = $"{vendorCode}.txt";
+                    string dbFilePath = GetFilePath(vendorCode); // Використовуємо новий шлях
                     string[] lines = File.ReadAllLines(openFile.FileName);
                     int added = 0;
 
@@ -151,7 +158,7 @@ namespace ArticulMaster
                         {
                             if (occupiedPrices.Add(p))
                             {
-                                File.AppendAllText(dbFile, p + Environment.NewLine);
+                                File.AppendAllText(dbFilePath, p + Environment.NewLine);
                                 added++;
                             }
                         }
@@ -163,26 +170,24 @@ namespace ArticulMaster
             }
         }
 
-        // --- КНОПКА ПОШУКУ ---
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtSearch.Text.Trim(), out int searchPrice))
             {
                 if (occupiedPrices.Contains(searchPrice))
                 {
-                    lblSearchStatus.ForeColor = Color.Red; // Виводимо в НОВИЙ label
+                    lblSearchStatus.ForeColor = Color.Red;
                     lblSearchStatus.Text = "ЗАЙНЯТО";
                     MessageBox.Show(this, $"Ціна {searchPrice} вже є в базі!", "Пошук");
                 }
                 else
                 {
-                    lblSearchStatus.ForeColor = Color.Lime; // Виводимо в НОВИЙ label
+                    lblSearchStatus.ForeColor = Color.Lime;
                     lblSearchStatus.Text = "ВІЛЬНО";
                 }
             }
         }
 
-        // --- КНОПКА ВИДАЛЕННЯ ---
         private void btnDelete_Click(object sender, EventArgs e)
         {
             string input = txtSearch.Text.Trim();
@@ -191,10 +196,11 @@ namespace ArticulMaster
                 try
                 {
                     string code = GetVendorCode(comboVendors.Text);
-                    File.WriteAllLines($"{code}.txt", occupiedPrices.Select(n => n.ToString()));
+                    string filePath = GetFilePath(code); // Використовуємо новий шлях
+                    File.WriteAllLines(filePath, occupiedPrices.Select(n => n.ToString()));
                     UpdateCount();
 
-                    lblSearchStatus.ForeColor = Color.Orange; // Виводимо в НОВИЙ label
+                    lblSearchStatus.ForeColor = Color.Orange;
                     lblSearchStatus.Text = $"DEL: {p}";
 
                     txtSearch.Clear();
@@ -204,14 +210,11 @@ namespace ArticulMaster
             }
         }
 
-        // --- ЛОГІКА ПЛЕЙСХОЛДЕРА (Слово "пошук") ---
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (txtSearch.Text == "пошук")
             {
                 txtSearch.Text = "";
-                // Тут встановлюємо колір тексту, який ти будеш вводити
-                // Якщо фон темний — ставимо White, якщо світлий — Black
                 txtSearch.ForeColor = Color.Black;
             }
         }
