@@ -1,275 +1,291 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Media;
+using System.Reflection; // Додано для роботи з версією збірки
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace ArticulMaster;
 
 public class Form1 : Form
 {
-	private string currentVersion = "4.3.0.4";
+    private string currentVersion = "";
 
-	private HashSet<int> occupiedPrices = new HashSet<int>();
+    private HashSet<int> occupiedPrices = new HashSet<int>();
 
-	private List<string> vendorsList = new List<string> { "[207] Pc.Lviv", "[212] eLaptop", "[33] PXL", "[37] Fortserg1", "[241] Gadgetusa", "[11] It-Technolodgy", "[213] IT-Lviv", "[233] LPStore", "[228] Ruslan111", "[224] SvChoice" };
+    private List<string> vendorsList = new List<string> { "[207] Pc.Lviv", "[212] eLaptop", "[33] PXL", "[37] Fortserg1", "[241] Gadgetusa", "[11] It-Technolodgy", "[213] IT-Lviv", "[233] LPStore", "[228] Ruslan111", "[224] SvChoice" };
 
-	private IContainer components;
+    private IContainer components;
 
-	private Label lblTitle;
+    private Label lblTitle;
 
-	private ComboBox comboVendors;
+    private ComboBox comboVendors;
 
-	private TextBox txtPrice;
+    private TextBox txtPrice;
 
-	private Label lblCount;
+    private Label lblCount;
 
-	private Button btnEdit;
+    private Button btnEdit;
 
-	private Button btnImport;
+    private Button btnImport;
 
-	private TextBox txtSearch;
+    private TextBox txtSearch;
 
-	private Button btnSearch;
+    private Button btnSearch;
 
-	private Button btnDelete;
+    private Button btnDelete;
 
-	private Label lblSearchStatus;
+    private Label lblSearchStatus;
 
-	private TextBox txtResult;
+    private TextBox txtResult;
 
-	public Form1()
-	{
-		InitializeComponent();
-		base.StartPosition = FormStartPosition.CenterScreen;
-	}
+    public Form1()
+    {
+        InitializeComponent();
+        base.StartPosition = FormStartPosition.CenterScreen;
+        // Викликаємо метод отримання версії відразу при створенні форми
+        SetCurrentVersion();
+    }
 
-	private string GetFilePath(string code)
-	{
-		string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ArticulMaster");
-		if (!Directory.Exists(appDataPath))
-		{
-			Directory.CreateDirectory(appDataPath);
-		}
-		return Path.Combine(appDataPath, code + ".txt");
-	}
+    // Метод для автоматичного підтягування версії
+    private void SetCurrentVersion()
+    {
+        // Отримуємо версію зборки (Assembly Version)
+        Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
-	private void Form1_Load(object sender, EventArgs e)
-	{
-		Text = "Articul Master Pro v." + currentVersion;
-		comboVendors.Items.Clear();
-		foreach (string v in vendorsList)
-		{
-			comboVendors.Items.Add(v);
-		}
-		comboVendors.SelectedIndexChanged += delegate
-		{
-			LoadDatabaseForSelectedVendor();
-		};
-		if (comboVendors.Items.Count > 0)
-		{
-			comboVendors.SelectedIndex = 0;
-		}
-		txtSearch.Text = "пошук";
-		txtSearch.ForeColor = Color.Gray;
-	}
+        // Форматуємо її у зручний вигляд (Major.Minor.Build)
+        if (version != null)
+        {
+            currentVersion = $"{version.Major}.{version.Minor}.{version.Build}";
+        }
+        else
+        {
+            currentVersion = "1.0.0";
+        }
+    }
 
-	private void LoadDatabaseForSelectedVendor()
-	{
-		occupiedPrices.Clear();
-		string code = GetVendorCode(comboVendors.Text);
-		string filePath = GetFilePath(code);
-		if (File.Exists(filePath))
-		{
-			string[] array = File.ReadAllLines(filePath);
-			for (int i = 0; i < array.Length; i++)
-			{
-				if (int.TryParse(array[i].Trim(), out var p))
-				{
-					occupiedPrices.Add(p);
-				}
-			}
-		}
-		UpdateCount();
-	}
+    private string GetFilePath(string code)
+    {
+        string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ArticulMaster");
+        if (!Directory.Exists(appDataPath))
+        {
+            Directory.CreateDirectory(appDataPath);
+        }
+        return Path.Combine(appDataPath, code + ".txt");
+    }
 
-	private string GetVendorCode(string vendorStr)
-	{
-		Match match = Regex.Match(vendorStr, "\\[(\\d+)\\]");
-		if (!match.Success)
-		{
-			return "000";
-		}
-		return match.Groups[1].Value;
-	}
+    private void Form1_Load(object sender, EventArgs e)
+    {
+        // Тепер у заголовку завжди буде актуальна цифра
+        Text = "Articul Master Pro v." + currentVersion;
 
-	private void GenerateArticul()
-	{
-		if (!string.IsNullOrWhiteSpace(txtPrice.Text) && int.TryParse(txtPrice.Text.Trim(), out var price))
-		{
-			string vendorCode = GetVendorCode(comboVendors.Text);
-			string filePath = GetFilePath(vendorCode);
-			while (occupiedPrices.Contains(price))
-			{
-				price--;
-			}
-			occupiedPrices.Add(price);
-			File.AppendAllText(filePath, price + Environment.NewLine);
-			txtResult.ForeColor = Color.SpringGreen;
-			txtResult.Text = $"{price}_{vendorCode}";
-			Clipboard.SetText(txtResult.Text);
-			SystemSounds.Beep.Play();
-			txtPrice.Clear();
-			UpdateCount();
-		}
-	}
+        comboVendors.Items.Clear();
+        foreach (string v in vendorsList)
+        {
+            comboVendors.Items.Add(v);
+        }
+        comboVendors.SelectedIndexChanged += delegate
+        {
+            LoadDatabaseForSelectedVendor();
+        };
+        if (comboVendors.Items.Count > 0)
+        {
+            comboVendors.SelectedIndex = 0;
+        }
+        txtSearch.Text = "пошук";
+        txtSearch.ForeColor = Color.Gray;
+    }
 
-	private void UpdateCount()
-	{
-		lblCount.Text = $"Артикулів у базі: {occupiedPrices.Count}";
-	}
+    private void LoadDatabaseForSelectedVendor()
+    {
+        occupiedPrices.Clear();
+        string code = GetVendorCode(comboVendors.Text);
+        string filePath = GetFilePath(code);
+        if (File.Exists(filePath))
+        {
+            string[] array = File.ReadAllLines(filePath);
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (int.TryParse(array[i].Trim(), out var p))
+                {
+                    occupiedPrices.Add(p);
+                }
+            }
+        }
+        UpdateCount();
+    }
 
-	private void txtPrice_KeyDown(object sender, KeyEventArgs e)
-	{
-		if (e.KeyCode == Keys.Return)
-		{
-			e.SuppressKeyPress = true;
-			GenerateArticul();
-		}
-	}
+    private string GetVendorCode(string vendorStr)
+    {
+        Match match = Regex.Match(vendorStr, "\\[(\\d+)\\]");
+        if (!match.Success)
+        {
+            return "000";
+        }
+        return match.Groups[1].Value;
+    }
 
-	private void btnEdit_Click(object sender, EventArgs e)
-	{
-		string code = GetVendorCode(comboVendors.Text);
-		string filePath = GetFilePath(code);
-		if (File.Exists(filePath))
-		{
-			Process process = new Process();
-			process.StartInfo = new ProcessStartInfo(filePath)
-			{
-				UseShellExecute = true
-			};
-			process.EnableRaisingEvents = true;
-			process.Exited += delegate
-			{
-				Invoke(delegate
-				{
-					LoadDatabaseForSelectedVendor();
-				});
-			};
-			process.Start();
-		}
-		else
-		{
-			MessageBox.Show(this, "Файл ще не створений. Додайте перший артикул!", "Редагування");
-		}
-	}
+    private void GenerateArticul()
+    {
+        if (!string.IsNullOrWhiteSpace(txtPrice.Text) && int.TryParse(txtPrice.Text.Trim(), out var price))
+        {
+            string vendorCode = GetVendorCode(comboVendors.Text);
+            string filePath = GetFilePath(vendorCode);
+            while (occupiedPrices.Contains(price))
+            {
+                price--;
+            }
+            occupiedPrices.Add(price);
+            File.AppendAllText(filePath, price + Environment.NewLine);
+            txtResult.ForeColor = Color.SpringGreen;
+            txtResult.Text = $"{price}_{vendorCode}";
+            Clipboard.SetText(txtResult.Text);
+            SystemSounds.Beep.Play();
+            txtPrice.Clear();
+            UpdateCount();
+        }
+    }
 
-	private void btnImport_Click(object sender, EventArgs e)
-	{
-		OpenFileDialog openFile = new OpenFileDialog
-		{
-			Filter = "Text Files (*.txt)|*.txt"
-		};
-		if (openFile.ShowDialog() != DialogResult.OK)
-		{
-			return;
-		}
-		try
-		{
-			string vendorCode = GetVendorCode(comboVendors.Text);
-			string dbFilePath = GetFilePath(vendorCode);
-			string[] array = File.ReadAllLines(openFile.FileName);
-			int added = 0;
-			string[] array2 = array;
-			for (int i = 0; i < array2.Length; i++)
-			{
-				if (int.TryParse(array2[i].Trim(), out var p) && occupiedPrices.Add(p))
-				{
-					File.AppendAllText(dbFilePath, p + Environment.NewLine);
-					added++;
-				}
-			}
-			UpdateCount();
-			MessageBox.Show(this, $"Імпорт завершено!\nДодано нових цін: {added}", "Імпорт");
-		}
-		catch (Exception ex)
-		{
-			MessageBox.Show(this, "Помилка імпорту: " + ex.Message);
-		}
-	}
+    private void UpdateCount()
+    {
+        lblCount.Text = $"Артикулів у базі: {occupiedPrices.Count}";
+    }
 
-	private void btnSearch_Click(object sender, EventArgs e)
-	{
-		if (int.TryParse(txtSearch.Text.Trim(), out var searchPrice))
-		{
-			if (occupiedPrices.Contains(searchPrice))
-			{
-				lblSearchStatus.ForeColor = Color.Red;
-				lblSearchStatus.Text = "ЗАЙНЯТО";
-				MessageBox.Show(this, $"Ціна {searchPrice} вже є в базі!", "Пошук");
-			}
-			else
-			{
-				lblSearchStatus.ForeColor = Color.Lime;
-				lblSearchStatus.Text = "ВІЛЬНО";
-			}
-		}
-	}
+    private void txtPrice_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Return)
+        {
+            e.SuppressKeyPress = true;
+            GenerateArticul();
+        }
+    }
 
-	private void btnDelete_Click(object sender, EventArgs e)
-	{
-		if (!int.TryParse(txtSearch.Text.Trim(), out var p) || !occupiedPrices.Remove(p))
-		{
-			return;
-		}
-		try
-		{
-			string code = GetVendorCode(comboVendors.Text);
-			File.WriteAllLines(GetFilePath(code), occupiedPrices.Select((int n) => n.ToString()));
-			UpdateCount();
-			lblSearchStatus.ForeColor = Color.Orange;
-			lblSearchStatus.Text = $"DEL: {p}";
-			txtSearch.Clear();
-			SystemSounds.Exclamation.Play();
-		}
-		catch (Exception ex)
-		{
-			MessageBox.Show(this, "Помилка: " + ex.Message);
-		}
-	}
+    private void btnEdit_Click(object sender, EventArgs e)
+    {
+        string code = GetVendorCode(comboVendors.Text);
+        string filePath = GetFilePath(code);
+        if (File.Exists(filePath))
+        {
+            Process process = new Process();
+            process.StartInfo = new ProcessStartInfo(filePath)
+            {
+                UseShellExecute = true
+            };
+            process.EnableRaisingEvents = true;
+            process.Exited += delegate
+            {
+                Invoke(delegate
+                {
+                    LoadDatabaseForSelectedVendor();
+                });
+            };
+            process.Start();
+        }
+        else
+        {
+            MessageBox.Show(this, "Файл ще не створений. Додайте перший артикул!", "Редагування");
+        }
+    }
 
-	private void txtSearch_Enter(object sender, EventArgs e)
-	{
-		if (txtSearch.Text == "пошук")
-		{
-			txtSearch.Text = "";
-			txtSearch.ForeColor = Color.Black;
-		}
-	}
+    private void btnImport_Click(object sender, EventArgs e)
+    {
+        OpenFileDialog openFile = new OpenFileDialog
+        {
+            Filter = "Text Files (*.txt)|*.txt"
+        };
+        if (openFile.ShowDialog() != DialogResult.OK)
+        {
+            return;
+        }
+        try
+        {
+            string vendorCode = GetVendorCode(comboVendors.Text);
+            string dbFilePath = GetFilePath(vendorCode);
+            string[] array = File.ReadAllLines(openFile.FileName);
+            int added = 0;
+            string[] array2 = array;
+            for (int i = 0; i < array2.Length; i++)
+            {
+                if (int.TryParse(array2[i].Trim(), out var p) && occupiedPrices.Add(p))
+                {
+                    File.AppendAllText(dbFilePath, p + Environment.NewLine);
+                    added++;
+                }
+            }
+            UpdateCount();
+            MessageBox.Show(this, $"Імпорт завершено!\nДодано нових цін: {added}", "Імпорт");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(this, "Помилка імпорту: " + ex.Message);
+        }
+    }
 
-	private void txtSearch_Leave(object sender, EventArgs e)
-	{
-		if (string.IsNullOrWhiteSpace(txtSearch.Text))
-		{
-			txtSearch.Text = "пошук";
-			txtSearch.ForeColor = Color.Gray;
-		}
-	}
+    private void btnSearch_Click(object sender, EventArgs e)
+    {
+        if (int.TryParse(txtSearch.Text.Trim(), out var searchPrice))
+        {
+            if (occupiedPrices.Contains(searchPrice))
+            {
+                lblSearchStatus.ForeColor = Color.Red;
+                lblSearchStatus.Text = "ЗАЙНЯТО";
+                MessageBox.Show(this, $"Ціна {searchPrice} вже є в базі!", "Пошук");
+            }
+            else
+            {
+                lblSearchStatus.ForeColor = Color.Lime;
+                lblSearchStatus.Text = "ВІЛЬНО";
+            }
+        }
+    }
 
-	protected override void Dispose(bool disposing)
-	{
-		if (disposing && components != null)
-		{
-			components.Dispose();
-		}
-		base.Dispose(disposing);
-	}
+    private void btnDelete_Click(object sender, EventArgs e)
+    {
+        if (!int.TryParse(txtSearch.Text.Trim(), out var p) || !occupiedPrices.Remove(p))
+        {
+            return;
+        }
+        try
+        {
+            string code = GetVendorCode(comboVendors.Text);
+            File.WriteAllLines(GetFilePath(code), occupiedPrices.Select((int n) => n.ToString()));
+            UpdateCount();
+            lblSearchStatus.ForeColor = Color.Orange;
+            lblSearchStatus.Text = $"DEL: {p}";
+            txtSearch.Clear();
+            SystemSounds.Exclamation.Play();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(this, "Помилка: " + ex.Message);
+        }
+    }
+
+    private void txtSearch_Enter(object sender, EventArgs e)
+    {
+        if (txtSearch.Text == "пошук")
+        {
+            txtSearch.Text = "";
+            txtSearch.ForeColor = Color.Black;
+        }
+    }
+
+    private void txtSearch_Leave(object sender, EventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(txtSearch.Text))
+        {
+            txtSearch.Text = "пошук";
+            txtSearch.ForeColor = Color.Gray;
+        }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing && components != null)
+        {
+            components.Dispose();
+        }
+        base.Dispose(disposing);
+    }
 
     private void InitializeComponent()
     {
@@ -291,7 +307,7 @@ public class Form1 : Form
         // 
         lblTitle.AutoSize = true;
         lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-        lblTitle.Location = new Point(43, 27);
+        lblTitle.Location = new Point(105, 27);
         lblTitle.Name = "lblTitle";
         lblTitle.Size = new Size(213, 30);
         lblTitle.TabIndex = 0;
@@ -301,7 +317,7 @@ public class Form1 : Form
         // 
         comboVendors.DropDownStyle = ComboBoxStyle.DropDownList;
         comboVendors.FormattingEnabled = true;
-        comboVendors.Location = new Point(49, 70);
+        comboVendors.Location = new Point(116, 70);
         comboVendors.Name = "comboVendors";
         comboVendors.Size = new Size(190, 23);
         comboVendors.TabIndex = 1;
@@ -310,7 +326,7 @@ public class Form1 : Form
         // 
         txtPrice.BackColor = SystemColors.Window;
         txtPrice.BorderStyle = BorderStyle.FixedSingle;
-        txtPrice.Location = new Point(99, 228);
+        txtPrice.Location = new Point(161, 228);
         txtPrice.Name = "txtPrice";
         txtPrice.Size = new Size(100, 23);
         txtPrice.TabIndex = 2;
@@ -320,15 +336,16 @@ public class Form1 : Form
         // lblCount
         // 
         lblCount.AutoSize = true;
-        lblCount.Location = new Point(96, 106);
+        lblCount.Font = new Font("Segoe UI", 12F);
+        lblCount.Location = new Point(141, 96);
         lblCount.Name = "lblCount";
-        lblCount.Size = new Size(107, 15);
+        lblCount.Size = new Size(141, 21);
         lblCount.TabIndex = 4;
         lblCount.Text = "Артикулів у базі: 0";
         // 
         // btnEdit
         // 
-        btnEdit.Location = new Point(245, 70);
+        btnEdit.Location = new Point(330, 70);
         btnEdit.Name = "btnEdit";
         btnEdit.Size = new Size(41, 23);
         btnEdit.TabIndex = 5;
@@ -339,7 +356,7 @@ public class Form1 : Form
         // btnImport
         // 
         btnImport.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
-        btnImport.Location = new Point(112, 477);
+        btnImport.Location = new Point(174, 477);
         btnImport.Name = "btnImport";
         btnImport.Size = new Size(75, 23);
         btnImport.TabIndex = 6;
@@ -350,7 +367,7 @@ public class Form1 : Form
         // txtSearch
         // 
         txtSearch.ForeColor = Color.Gray;
-        txtSearch.Location = new Point(49, 135);
+        txtSearch.Location = new Point(116, 136);
         txtSearch.Name = "txtSearch";
         txtSearch.Size = new Size(100, 23);
         txtSearch.TabIndex = 7;
@@ -361,7 +378,7 @@ public class Form1 : Form
         // 
         // btnSearch
         // 
-        btnSearch.Location = new Point(155, 134);
+        btnSearch.Location = new Point(251, 134);
         btnSearch.Name = "btnSearch";
         btnSearch.Size = new Size(55, 23);
         btnSearch.TabIndex = 8;
@@ -371,9 +388,9 @@ public class Form1 : Form
         // 
         // btnDelete
         // 
-        btnDelete.Location = new Point(216, 135);
+        btnDelete.Location = new Point(330, 135);
         btnDelete.Name = "btnDelete";
-        btnDelete.Size = new Size(50, 23);
+        btnDelete.Size = new Size(41, 23);
         btnDelete.TabIndex = 9;
         btnDelete.Text = "Del";
         btnDelete.UseVisualStyleBackColor = true;
@@ -382,7 +399,7 @@ public class Form1 : Form
         // lblSearchStatus
         // 
         lblSearchStatus.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-        lblSearchStatus.Location = new Point(70, 179);
+        lblSearchStatus.Location = new Point(132, 179);
         lblSearchStatus.Name = "lblSearchStatus";
         lblSearchStatus.Size = new Size(158, 31);
         lblSearchStatus.TabIndex = 10;
@@ -390,12 +407,12 @@ public class Form1 : Form
         // 
         // txtResult
         // 
-        txtResult.BackColor = Color.LightSlateGray;
+        txtResult.BackColor = SystemColors.GradientActiveCaption;
         txtResult.BorderStyle = BorderStyle.None;
         txtResult.Cursor = Cursors.IBeam;
         txtResult.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
         txtResult.ForeColor = Color.GreenYellow;
-        txtResult.Location = new Point(70, 276);
+        txtResult.Location = new Point(132, 276);
         txtResult.Name = "txtResult";
         txtResult.ReadOnly = true;
         txtResult.Size = new Size(158, 32);
@@ -406,8 +423,8 @@ public class Form1 : Form
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        BackColor = Color.LightSlateGray;
-        ClientSize = new Size(298, 523);
+        BackColor = SystemColors.GradientActiveCaption;
+        ClientSize = new Size(422, 523);
         Controls.Add(txtResult);
         Controls.Add(lblSearchStatus);
         Controls.Add(btnDelete);

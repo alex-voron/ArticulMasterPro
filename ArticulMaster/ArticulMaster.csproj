@@ -1,27 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <AssemblyName>ArticulMasterPro</AssemblyName>
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <OutputType>WinExe</OutputType>
-    <UseWindowsForms>True</UseWindowsForms>
-    <TargetFramework>net10.0-windows</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup>
-    <LangVersion>14.0</LangVersion>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>app.ico</ApplicationIcon>
-    <RootNamespace />
-    <Copyright>OleksandrVoronin</Copyright>
-    <PackageIcon>мастер.png</PackageIcon>
-    <AssemblyTitle>ArticulMasterPro</AssemblyTitle>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\..\Орест\мастер.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>14.0</LangVersion>
+		<AssemblyName>ArticulMasterPro</AssemblyName>
+		<RootNamespace />
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<ApplicationVersion>1.0.0.1</ApplicationVersion>
+		<AssemblyVersion>1.0.0.1</AssemblyVersion>
+		<FileVersion>1.0.0.1</FileVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- Налаштування іконки та метаданих -->
+		<ApplicationIcon>app.ico</ApplicationIcon>
+		<Copyright>OleksandrVoronin</Copyright>
+		<AssemblyTitle>ArticulMasterPro</AssemblyTitle>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- Пакетна іконка -->
+		<PackageIcon>мастер.png</PackageIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\Орест\мастер.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
 </Project>
