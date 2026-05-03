@@ -13,13 +13,18 @@
 
 	<PropertyGroup>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-		<ApplicationVersion>1.0.0.1</ApplicationVersion>
-		<AssemblyVersion>1.0.0.1</AssemblyVersion>
-		<FileVersion>1.0.0.1</FileVersion>
-	</PropertyGroup>
 
+		<!-- Вимикаємо детермінізм, щоб студія дозволила нам маніпулювати версіями -->
+		<Deterministic>false</Deterministic>
+
+		<!-- Використовуємо номер ревізії з ClickOnce -->
+		<ApplicationVersion Condition="'$(ApplicationRevision)' != ''">2.0.0.$(ApplicationRevision)</ApplicationVersion>
+		<ApplicationVersion Condition="'$(ApplicationRevision)' == ''">2.0.0.0</ApplicationVersion>
+
+		<AssemblyVersion>$(ApplicationVersion)</AssemblyVersion>
+		<FileVersion>$(ApplicationVersion)</FileVersion>
+	</PropertyGroup>
 	<PropertyGroup>
-		<!-- Налаштування іконки та метаданих -->
 		<ApplicationIcon>app.ico</ApplicationIcon>
 		<Copyright>OleksandrVoronin</Copyright>
 		<AssemblyTitle>ArticulMasterPro</AssemblyTitle>
@@ -27,15 +32,10 @@
 		<CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<!-- Пакетна іконка -->
-		<PackageIcon>мастер.png</PackageIcon>
-	</PropertyGroup>
-
 	<ItemGroup>
-		<None Include="..\..\Орест\мастер.png">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
+		<!-- Видалив посилання на кириличний шлях, щоб не було помилок доступу -->
+		<None Include="app.ico">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
